@@ -72,11 +72,13 @@ body { padding: 0; margin: 0; font-family: "Gill"; font-weight: normal; }
 
 .itqan-calendar .calendar-wrapper .right #calendar .fc-scrollgrid-sync-table tbody tr td .fc-daygrid-day-number:before { content: " "; background: #d4d5d4; width: 8px; height: 8px; position: absolute; border-radius: 50px; top: 8px; left: 0; right: 0; margin: auto; }
 
-.itqan-calendar .calendar-wrapper .right #calendar .fc-scrollgrid-sync-table tbody tr td .fc-daygrid-day-events { bottom: -10px; }
+.itqan-calendar .calendar-wrapper .right #calendar .fc-scrollgrid-sync-table tbody tr td .fc-daygrid-day-events { bottom: -2px; }
 
 .itqan-calendar .calendar-wrapper .right #calendar .fc-scrollgrid-sync-table tbody tr td .fc-daygrid-day-frame { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: reverse; -ms-flex-direction: column-reverse; flex-direction: column-reverse; }
 
-.itqan-calendar .calendar-wrapper .right #calendar .fc-scrollgrid-sync-table tbody tr td .fc-h-event { background: #085a30; border-radius: 0; font-family: "Gill"; font-size: 12px; border: none; padding: 3px 5px; cursor: pointer; }
+.itqan-calendar .calendar-wrapper .right #calendar .fc-scrollgrid-sync-table tbody tr td .fc-h-event { background: #085a30; border-radius: 0; font-family: "Gill"; font-size: 12px; border: none; padding: 6px 6px 6px 30px; cursor: pointer; position: relative; }
+
+.itqan-calendar .calendar-wrapper .right #calendar .fc-scrollgrid-sync-table tbody tr td .fc-h-event:before { content: " "; background: url(images/calendar-icon.png) no-repeat; width: 15px; height: 16px; background-size: cover !important; position: absolute; left: 8px; top: 5px; background-position: 0 0; }
 
 .itqan-calendar .calendar-wrapper .right #calendar .fc-scrollgrid-sync-table tbody tr td.isEvent .fc-daygrid-day-top { -webkit-box-align: start; -ms-flex-align: start; align-items: flex-start; }
 

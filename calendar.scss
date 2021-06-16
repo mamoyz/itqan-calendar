@@ -220,7 +220,7 @@ body {
 									}
 								}
 								.fc-daygrid-day-events {
-									bottom: -10px;
+									bottom: -2px;
 								}
 								.fc-daygrid-day-frame {
 									display: flex;
@@ -233,8 +233,20 @@ body {
 									font-family: "Gill";
 									font-size: 12px;
 									border: none;
-									padding: 3px 5px;
+									padding: 6px 6px 6px 30px;
 									cursor: pointer;
+									position: relative;
+									&:before {
+										content: " ";
+										background: url(images/calendar-icon.png) no-repeat;
+										width: 15px;
+										height: 16px;
+										background-size: cover !important;
+										position: absolute;
+										left: 8px;
+										top: 5px;
+										background-position: 0 0;
+									}
 								}
 								&.isEvent {
 									.fc-daygrid-day-top {
