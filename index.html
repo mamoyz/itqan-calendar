@@ -5,12 +5,13 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Itqan Calendar</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css" />
 		<link rel="stylesheet" href="calendar.css" />
 	</head>
 	<body>
 		<section class="itqan-calendar">
 			<div class="container">
-				<div class="calendar-wrapper">
+				<div class="calendar-wrapper clearfix">
 					<div class="left">
 						<h3>ITQAN</h3>
 						<h2>Calendar</h2>
@@ -19,26 +20,76 @@
 								<div class="current-event-img">
 									<img src="images/Bitmap.png" alt="" />
 								</div>
-								<div class="current-event-details">
-									<h4>Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum</h4>
-									<span>Date goes here</span>
+								<div class="current-event-details fade-out">
+									<h4 id="currentEventTitle"></h4>
+									<span id="currentEventDate"></span>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="rigt">
+					<div class="right">
 						<div id="calendar"></div>
 					</div>
 				</div>
 			</div>
+			<div class="clearfix"></div>
 		</section>
+		<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js"></script>
 		<script>
 			document.addEventListener("DOMContentLoaded", function () {
 				var calendarEl = document.getElementById("calendar");
 				var calendar = new FullCalendar.Calendar(calendarEl, {
 					initialView: "dayGridMonth",
+					aspectRatio: 1.7,
+					themeSystem: "standard",
+					timeZone: "UTC",
+					fixedWeekCount: false,
+					headerToolbar: {
+						left: "title prev next",
+						center: null,
+						right: null,
+					},
+					dayCellDidMount: function (a) {
+						setTimeout(function () {
+							let el = a.el;
+							console.log();
+
+							if ($(el).find(".fc-daygrid-day-bottom").css("margin-top") != "0px") {
+								$(el).closest("td").addClass("isEvent");
+							}
+						}, 100);
+
+						// $(dayClass).addClass("holiday-color");
+					},
+					events: [
+						{
+							title: "Title of the event",
+							start: "2021-06-11",
+							end: "2021-06-15",
+							display: "block",
+						},
+						{
+							title: "Title of the event",
+							start: "2021-07-16",
+							end: "2021-07-18",
+						},
+					],
+					eventClick: function (info) {
+						const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+						const d = new Date(info.event.start);
+
+						$(".current-event-details").removeClass("fade-in");
+						$(".current-event-details").addClass("fade-out");
+						setTimeout(() => {
+							$(".current-event-details").removeClass("fade-out");
+							$(".current-event-details").addClass("fade-in");
+							$("#currentEventTitle").text(info.event.title);
+							$("#currentEventDate").text(monthNames[d.getMonth()] + "  " + d.getDate().toString().padStart(2, "0"));
+						}, 400);
+					},
 				});
+
 				calendar.render();
 			});
 		</script>
