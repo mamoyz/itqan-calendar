@@ -54,7 +54,7 @@
 							</div>
 						</div>
 						<div class="calendar-right">
-							<div class="itqan-calendar-object" data-locale="ar-sa" data-direction="rtl" data-events='[ {title:"لوريم إيبسوم هو ببساطة نص شكلي", start:"2021-06-03" , end:"2021-06-04"},{ title: "لوريم إيبسوم هو ببساطة نص شكلي", start: "2021-06-11", end: "2021-06-15" }, { title: "لوريم إيبسوم هو ببساطة نص شكلي", start: "2021-07-16", end: "2021-07-18", }, ]'></div>
+							<div class="itqan-calendar-object" data-locale="ar-georgian" data-direction="rtl" data-events='[ {title:"لوريم إيبسوم هو ببساطة نص شكلي", start:"2021-06-03" , end:"2021-06-04"},{ title: "لوريم إيبسوم هو ببساطة نص شكلي", start: "2021-06-11", end: "2021-06-15" }, { title: "لوريم إيبسوم هو ببساطة نص شكلي", start: "2021-07-16", end: "2021-07-18", }, ]'></div>
 						</div>
 					</div>
 				</div>
@@ -65,7 +65,7 @@
 		<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 
 		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js"></script>
+
 		<script>
 			document.addEventListener("DOMContentLoaded", function () {
 				$.each($(".itqan-calendar-object"), function () {
@@ -96,20 +96,24 @@
 						events: events,
 
 						eventClick: function (info) {
-							const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-							// const arabicMonthNames = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
-							const arabic = true;
+							let monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+							const arabic = $(info.el).closest(".calendar-wrapper").find(".itqan-calendar-object").data("direction") == "rtl";
+
 							const s = new Date(info.event.start);
 							const e = new Date(info.event.end);
+							if (arabic) {
+								monthNames = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
+							}
 							let oneDay = e.getDate().toString() - s.getDate().toString() == 1;
 							let start = monthNames[s.getMonth()] + "  " + s.getDate().toString().padStart(2, "0");
 							let end = monthNames[e.getMonth()] + "  " + e.getDate().toString().padStart(2, "0");
 							let eventDetails = $(info.el).closest(".calendar-wrapper").find(".current-event-details");
 							console.log();
-							if (arabic) {
-								start = new Date(info.event.start).toLocaleDateString("ar-sa", { month: "long", day: "numeric" });
-								end = new Date(info.event.end).toLocaleDateString("ar-sa", { month: "long", day: "numeric" });
-							}
+							// if (arabic) {
+							// 	start = new Date(info.event.start).toLocaleDateString("ar-sa", { month: "long", day: "numeric" });
+							// 	end = new Date(info.event.end).toLocaleDateString("ar-sa", { month: "long", day: "numeric" });
+							// }
 							eventDetails.removeClass("fade-in");
 							eventDetails.addClass("fade-out");
 							setTimeout(() => {
