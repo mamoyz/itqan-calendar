@@ -28,7 +28,7 @@ body {
 		content: " ";
 	}
 }
-.container {
+.itqan-container {
 	max-width: 1140px;
 	margin-left: auto;
 	margin-right: auto;
@@ -46,7 +46,7 @@ body {
 		display: flex;
 		justify-content: space-between;
 		align-items: stretch;
-		.left {
+		.calendar-left {
 			flex: 0 1 100%;
 			max-width: 460px;
 			padding-right: 100px;
@@ -124,11 +124,11 @@ body {
 				}
 			}
 		}
-		.right {
+		.calendar-right {
 			flex: 0 1 100%;
 			max-width: 680px;
 			padding-top: 25px;
-			#calendar {
+			#itqan-calendar {
 				position: relative;
 				right: 15px;
 				thead {
@@ -236,6 +236,12 @@ body {
 									padding: 6px 6px 6px 30px;
 									cursor: pointer;
 									position: relative;
+									&:not(.fc-event-start) {
+										.fc-event-title,
+										&:before {
+											opacity: 0;
+										}
+									}
 									&:before {
 										content: " ";
 										background: url(images/calendar-icon.png) no-repeat;
@@ -251,12 +257,13 @@ body {
 								&.isEvent {
 									.fc-daygrid-day-top {
 										align-items: flex-start;
+										top: -4px;
 									}
 									.fc-daygrid-day-bg {
 										background: transparent !important;
 									}
 									.fc-daygrid-day-number {
-										color: #085a30;
+										color: #085a30 !important;
 
 										&:before {
 											background: #085a30;

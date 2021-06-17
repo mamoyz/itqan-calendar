@@ -10,9 +10,9 @@
 	</head>
 	<body>
 		<section class="itqan-calendar">
-			<div class="container">
+			<div class="itqan-container">
 				<div class="calendar-wrapper clearfix">
-					<div class="left">
+					<div class="calendar-left">
 						<h3>ITQAN</h3>
 						<h2>Calendar</h2>
 						<div class="current-event-container">
@@ -27,8 +27,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="right">
-						<div id="calendar"></div>
+					<div class="calendar-right">
+						<div id="itqan-calendar" data-events='[ {title:"One Day Event", start:"2021-06-03" , end:"2021-06-04"},{ title: "Title of the event", start: "2021-06-11", end: "2021-06-15" }, { title: "Title of the event", start: "2021-07-16", end: "2021-07-18", }, ]'></div>
 					</div>
 				</div>
 			</div>
@@ -38,54 +38,48 @@
 		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js"></script>
 		<script>
 			document.addEventListener("DOMContentLoaded", function () {
-				var calendarEl = document.getElementById("calendar");
+				var calendarEl = document.getElementById("itqan-calendar");
+				var events = eval(calendarEl.getAttribute("data-events"));
 				var calendar = new FullCalendar.Calendar(calendarEl, {
 					initialView: "dayGridMonth",
 					aspectRatio: 1.7,
 					themeSystem: "standard",
-					timeZone: "UTC",
 					fixedWeekCount: false,
 					headerToolbar: {
 						left: "title prev next",
 						center: null,
 						right: null,
 					},
+					eventDidMount: function (a) {
+						console.log(a);
+					},
 					dayCellDidMount: function (a) {
 						setTimeout(function () {
 							let el = a.el;
 							console.log();
 
-							if ($(el).find(".fc-daygrid-day-bottom").css("margin-top") != "0px") {
+							if ($(el).find(".fc-daygrid-day-bottom").css("margin-top") != "0px" || $(el).find(".fc-daygrid-event-harness").length > 0) {
 								$(el).closest("td").addClass("isEvent");
 							}
 						}, 100);
-
-						// $(dayClass).addClass("holiday-color");
 					},
-					events: [
-						{
-							title: "Title of the event",
-							start: "2021-06-11",
-							end: "2021-06-15",
-							display: "block",
-						},
-						{
-							title: "Title of the event",
-							start: "2021-07-16",
-							end: "2021-07-18",
-						},
-					],
+					events: events,
+
 					eventClick: function (info) {
 						const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-						const d = new Date(info.event.start);
+						const s = new Date(info.event.start);
+						const e = new Date(info.event.end);
 
+						let oneDay = e.getDate().toString() - s.getDate().toString() == 1;
+						let start = monthNames[s.getMonth()] + "  " + s.getDate().toString().padStart(2, "0");
+						let end = monthNames[e.getMonth()] + "  " + e.getDate().toString().padStart(2, "0");
 						$(".current-event-details").removeClass("fade-in");
 						$(".current-event-details").addClass("fade-out");
 						setTimeout(() => {
 							$(".current-event-details").removeClass("fade-out");
 							$(".current-event-details").addClass("fade-in");
 							$("#currentEventTitle").text(info.event.title);
-							$("#currentEventDate").text(monthNames[d.getMonth()] + "  " + d.getDate().toString().padStart(2, "0"));
+							oneDay ? $("#currentEventDate").text(start) : $("#currentEventDate").text(start + " - " + end);
 						}, 400);
 					},
 				});
