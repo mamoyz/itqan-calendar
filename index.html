@@ -21,70 +21,108 @@
 									<img src="images/Bitmap.png" alt="" />
 								</div>
 								<div class="current-event-details fade-out">
-									<h4 id="currentEventTitle"></h4>
-									<span id="currentEventDate"></span>
+									<h4 class="currentEventTitle"></h4>
+									<span class="currentEventDate"></span>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="calendar-right">
-						<div id="itqan-calendar" data-events='[ {title:"One Day Event", start:"2021-06-03" , end:"2021-06-04"},{ title: "Title of the event", start: "2021-06-11", end: "2021-06-15" }, { title: "Title of the event", start: "2021-07-16", end: "2021-07-18", }, ]'></div>
+						<div class="itqan-calendar-object" data-locale="en" data-direction="ltr" data-events='[ {title:"One Day Event", start:"2021-06-03" , end:"2021-06-04"},{ title: "Title of the event", start: "2021-06-11", end: "2021-06-15" }, { title: "Title of the event", start: "2021-07-16", end: "2021-07-18", }, ]'></div>
 					</div>
 				</div>
 			</div>
 			<div class="clearfix"></div>
 		</section>
+		<div class="rtl">
+			<section class="itqan-calendar">
+				<div class="itqan-container">
+					<div class="calendar-wrapper clearfix">
+						<div class="calendar-left">
+							<h3>إتقان</h3>
+							<h2>تقويم</h2>
+							<div class="current-event-container">
+								<div class="current-event-wrapper">
+									<div class="current-event-img">
+										<img src="images/Bitmap.png" alt="" />
+									</div>
+									<div class="current-event-details fade-out">
+										<h4 class="currentEventTitle"></h4>
+										<span class="currentEventDate"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="calendar-right">
+							<div class="itqan-calendar-object" data-locale="ar-sa" data-direction="rtl" data-events='[ {title:"لوريم إيبسوم هو ببساطة نص شكلي", start:"2021-06-03" , end:"2021-06-04"},{ title: "لوريم إيبسوم هو ببساطة نص شكلي", start: "2021-06-11", end: "2021-06-15" }, { title: "لوريم إيبسوم هو ببساطة نص شكلي", start: "2021-07-16", end: "2021-07-18", }, ]'></div>
+						</div>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</section>
+		</div>
+
 		<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
 		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js"></script>
 		<script>
 			document.addEventListener("DOMContentLoaded", function () {
-				var calendarEl = document.getElementById("itqan-calendar");
-				var events = eval(calendarEl.getAttribute("data-events"));
-				var calendar = new FullCalendar.Calendar(calendarEl, {
-					initialView: "dayGridMonth",
-					aspectRatio: 1.7,
-					themeSystem: "standard",
-					fixedWeekCount: false,
-					headerToolbar: {
-						left: "title prev next",
-						center: null,
-						right: null,
-					},
-					eventDidMount: function (a) {
-						console.log(a);
-					},
-					dayCellDidMount: function (a) {
-						setTimeout(function () {
-							let el = a.el;
+				$.each($(".itqan-calendar-object"), function () {
+					var calendarEl = $(this)[0];
+					var events = eval(calendarEl.getAttribute("data-events"));
+					var calendar = new FullCalendar.Calendar(calendarEl, {
+						initialView: "dayGridMonth",
+						aspectRatio: 1.7,
+						themeSystem: "standard",
+						fixedWeekCount: false,
+						headerToolbar: {
+							left: "title prev next",
+							center: null,
+							right: null,
+						},
+						direction: calendarEl.getAttribute("data-direction"),
+						locale: calendarEl.getAttribute("data-locale"),
+
+						dayCellDidMount: function (a) {
+							setTimeout(function () {
+								let el = a.el;
+
+								if ($(el).find(".fc-daygrid-day-bottom").css("margin-top") != "0px" || $(el).find(".fc-daygrid-event-harness").length > 0) {
+									$(el).closest("td").addClass("isEvent");
+								}
+							}, 100);
+						},
+						events: events,
+
+						eventClick: function (info) {
+							const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+							// const arabicMonthNames = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
+							const arabic = true;
+							const s = new Date(info.event.start);
+							const e = new Date(info.event.end);
+							let oneDay = e.getDate().toString() - s.getDate().toString() == 1;
+							let start = monthNames[s.getMonth()] + "  " + s.getDate().toString().padStart(2, "0");
+							let end = monthNames[e.getMonth()] + "  " + e.getDate().toString().padStart(2, "0");
+							let eventDetails = $(info.el).closest(".calendar-wrapper").find(".current-event-details");
 							console.log();
-
-							if ($(el).find(".fc-daygrid-day-bottom").css("margin-top") != "0px" || $(el).find(".fc-daygrid-event-harness").length > 0) {
-								$(el).closest("td").addClass("isEvent");
+							if (arabic) {
+								start = new Date(info.event.start).toLocaleDateString("ar-sa", { month: "long", day: "numeric" });
+								end = new Date(info.event.end).toLocaleDateString("ar-sa", { month: "long", day: "numeric" });
 							}
-						}, 100);
-					},
-					events: events,
+							eventDetails.removeClass("fade-in");
+							eventDetails.addClass("fade-out");
+							setTimeout(() => {
+								eventDetails.removeClass("fade-out");
+								eventDetails.addClass("fade-in");
+								eventDetails.find(".currentEventTitle").text(info.event.title);
+								oneDay ? eventDetails.find(".currentEventDate").text(start) : eventDetails.find(".currentEventDate").text(start + " - " + end);
+							}, 400);
+						},
+					});
 
-					eventClick: function (info) {
-						const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-						const s = new Date(info.event.start);
-						const e = new Date(info.event.end);
-
-						let oneDay = e.getDate().toString() - s.getDate().toString() == 1;
-						let start = monthNames[s.getMonth()] + "  " + s.getDate().toString().padStart(2, "0");
-						let end = monthNames[e.getMonth()] + "  " + e.getDate().toString().padStart(2, "0");
-						$(".current-event-details").removeClass("fade-in");
-						$(".current-event-details").addClass("fade-out");
-						setTimeout(() => {
-							$(".current-event-details").removeClass("fade-out");
-							$(".current-event-details").addClass("fade-in");
-							$("#currentEventTitle").text(info.event.title);
-							oneDay ? $("#currentEventDate").text(start) : $("#currentEventDate").text(start + " - " + end);
-						}, 400);
-					},
+					calendar.render();
 				});
-
-				calendar.render();
 			});
 		</script>
 	</body>

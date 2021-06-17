@@ -34,6 +34,10 @@ body {
 	margin-right: auto;
 	height: 500px;
 	width: 100%;
+	@media (max-width: 1200px) {
+		padding-left: 30px;
+		padding-right: 30px;
+	}
 }
 
 .itqan-calendar {
@@ -128,7 +132,7 @@ body {
 			flex: 0 1 100%;
 			max-width: 680px;
 			padding-top: 25px;
-			#itqan-calendar {
+			.itqan-calendar-object {
 				position: relative;
 				right: 15px;
 				thead {
@@ -305,6 +309,31 @@ body {
 							}
 						}
 					}
+				}
+			}
+		}
+	}
+}
+
+.rtl {
+	.itqan-calendar {
+		.calendar-wrapper {
+			flex-direction: row-reverse;
+			.calendar-left {
+				text-align: right;
+				direction: rtl;
+				padding-right: 0;
+				padding-left: 100px;
+				.current-event-container .current-event-wrapper .current-event-details {
+					left: auto;
+					right: 40px;
+				}
+			}
+			.calendar-right .itqan-calendar-object .fc-scrollgrid-sync-table tbody tr td .fc-h-event {
+				padding: 6px 30px 6px 6px;
+				&:before {
+					left: auto;
+					right: 8px;
 				}
 			}
 		}
