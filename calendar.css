@@ -109,3 +109,9 @@ body { padding: 0; margin: 0; font-family: "Gill"; font-weight: normal; }
 .rtl .itqan-calendar .calendar-wrapper .calendar-right .itqan-calendar-object .fc-scrollgrid-sync-table tbody tr td .fc-h-event { padding: 6px 30px 6px 6px; }
 
 .rtl .itqan-calendar .calendar-wrapper .calendar-right .itqan-calendar-object .fc-scrollgrid-sync-table tbody tr td .fc-h-event:before { left: auto; right: 8px; }
+
+.rtl .itqan-calendar .calendar-wrapper .calendar-right .itqan-calendar-object { right: 0; left: 15px; }
+
+.rtl .itqan-calendar .calendar-wrapper .calendar-right .itqan-calendar-object .fc-toolbar { margin-left: 0; margin-right: 15px; }
+
+.rtl .itqan-calendar .calendar-wrapper .calendar-right .itqan-calendar-object .fc-toolbar .fc-toolbar-title { margin-right: 0; margin-left: 10px; }

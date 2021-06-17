@@ -337,6 +337,20 @@ body {
 					right: 8px;
 				}
 			}
+			.calendar-right {
+				.itqan-calendar-object {
+					right: 0;
+					left: 15px;
+					.fc-toolbar {
+						margin-left: 0;
+						margin-right: 15px;
+						.fc-toolbar-title {
+							margin-right: 0;
+							margin-left: 10px;
+						}
+					}
+				}
+			}
 		}
 	}
 }
