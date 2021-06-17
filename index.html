@@ -73,13 +73,18 @@
 					var events = eval(calendarEl.getAttribute("data-events"));
 					var calendar = new FullCalendar.Calendar(calendarEl, {
 						initialView: "dayGridMonth",
-						aspectRatio: 1.7,
+						aspectRatio: $(window).innerWidth() < 1025 ? 1.4 : 1.7,
 						themeSystem: "standard",
 						fixedWeekCount: false,
 						headerToolbar: {
 							left: "title prev next",
 							center: null,
 							right: null,
+						},
+						windowResize: function (arg) {
+							if ($(window).innerWidth() < 1025) {
+								calendar.setOption("aspectRatio", 1.4);
+							}
 						},
 						direction: calendarEl.getAttribute("data-direction"),
 						locale: calendarEl.getAttribute("data-locale"),

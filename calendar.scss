@@ -32,7 +32,6 @@ body {
 	max-width: 1140px;
 	margin-left: auto;
 	margin-right: auto;
-	height: 500px;
 	width: 100%;
 	@media (max-width: 1200px) {
 		padding-left: 30px;
@@ -50,10 +49,17 @@ body {
 		display: flex;
 		justify-content: space-between;
 		align-items: stretch;
+		@media (max-width: 767px) {
+			flex-direction: column;
+		}
 		.calendar-left {
 			flex: 0 1 100%;
-			max-width: 460px;
-			padding-right: 100px;
+			max-width: 40%;
+			padding-right: 8%;
+			@media (max-width: 767px) {
+				max-width: 100%;
+				padding-right: 0;
+			}
 			h3 {
 				color: #005b2e;
 				font-size: 16px;
@@ -97,8 +103,13 @@ body {
 						padding: 15px 40px 15px 20px;
 						left: 40px;
 						bottom: 60px;
-						width: 400px;
+						width: 100%;
 						box-shadow: 10px 10px 50px rgba(0, 0, 0, 0.1);
+						@media (max-width: 767px) {
+							left: 20px;
+							width: auto;
+							right: 20px;
+						}
 						&.fade-out {
 							opacity: 0;
 							transition: all 0.3s;
@@ -130,8 +141,11 @@ body {
 		}
 		.calendar-right {
 			flex: 0 1 100%;
-			max-width: 680px;
+			max-width: 60%;
 			padding-top: 25px;
+			@media (max-width: 767px) {
+				max-width: 100%;
+			}
 			.itqan-calendar-object {
 				position: relative;
 				right: 15px;
@@ -193,6 +207,9 @@ body {
 							td {
 								padding-bottom: 10px;
 								background: transparent;
+								@media (max-width: 1024px) {
+									padding-bottom: 5px;
+								}
 								&.fc-day-other {
 									opacity: 0;
 								}
@@ -202,6 +219,10 @@ body {
 									left: 16px;
 									right: 16px;
 									bottom: 0;
+									@media (max-width: 1024px) {
+										left: 3px;
+										right: 3px;
+									}
 								}
 								.fc-daygrid-day-number {
 									font-family: "Gill";
@@ -210,6 +231,9 @@ body {
 									color: #d4d5d4;
 									padding-top: 25px;
 									position: relative;
+									@media (max-width: 1024px) {
+										padding-top: 0;
+									}
 									&:before {
 										content: " ";
 										background: #d4d5d4;
@@ -221,6 +245,9 @@ body {
 										left: 0;
 										right: 0;
 										margin: auto;
+										@media (max-width: 1024px) {
+											display: none;
+										}
 									}
 								}
 								.fc-daygrid-day-events {
@@ -262,6 +289,10 @@ body {
 									.fc-daygrid-day-top {
 										align-items: flex-start;
 										top: -4px;
+										@media (max-width: 1024px) {
+											align-items: center;
+											top: 0;
+										}
 									}
 									.fc-daygrid-day-bg {
 										background: transparent !important;
@@ -271,6 +302,29 @@ body {
 
 										&:before {
 											background: #085a30;
+										}
+									}
+									@media (max-width: 1024px) {
+										.fc-daygrid-day-bg {
+											background: #085a30 !important;
+										}
+										.fc-daygrid-day-number {
+											color: #fff !important;
+										}
+										.fc-daygrid-day-events {
+											top: 0;
+											position: absolute;
+											width: 100%;
+											bottom: 0;
+											.fc-daygrid-event-harness {
+												bottom: 0;
+												height: 100%;
+											}
+											.fc-h-event {
+												height: 100%;
+												display: block;
+												opacity: 0;
+											}
 										}
 									}
 								}
@@ -319,15 +373,25 @@ body {
 	.itqan-calendar {
 		.calendar-wrapper {
 			flex-direction: row-reverse;
+			@media (max-width: 767px) {
+				flex-direction: column;
+			}
 			.calendar-left {
 				text-align: right;
 				direction: rtl;
 				padding-right: 0;
-				padding-left: 100px;
+				padding-left: 8%;
+				@media (max-width: 767px) {
+					padding-left: 0;
+				}
 				.current-event-container .current-event-wrapper .current-event-details {
 					left: auto;
 					right: 40px;
 					padding: 15px 15px 20px 40px;
+					@media (max-width: 767px) {
+						right: 20px;
+						width: 20px;
+					}
 				}
 			}
 			.calendar-right .itqan-calendar-object .fc-scrollgrid-sync-table tbody tr td .fc-h-event {
